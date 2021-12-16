@@ -1,3 +1,4 @@
+@file:JvmName("MainKt")
 package net.azisaba.spicyAzisabaBot
 
 import dev.kord.common.entity.Snowflake
