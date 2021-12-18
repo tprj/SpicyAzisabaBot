@@ -24,7 +24,10 @@ suspend fun main() {
     }
 
     client.on<MemberJoinEvent> {
-        val channel = client.getChannel(Snowflake(System.getenv("WELCOME_CHANNEL_ID"))) ?: return@on
+        val id = System.getenv("WELCOME_CHANNEL_ID")
+        if (id.isNullOrBlank()) return@on
+        if (member.isBot) return@on
+        val channel = client.getChannel(Snowflake(id)) ?: return@on
         if (channel !is TextChannel) return@on
         channel.createMessage("""
             ${member.mention}
