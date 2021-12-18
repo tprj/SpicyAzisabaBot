@@ -11,12 +11,13 @@ import net.azisaba.spicyAzisabaBot.util.Util
 import net.azisaba.spicyAzisabaBot.util.getObject
 
 class CVEMessageHandler: MessageHandler {
-    override fun canProcess(message: Message): Boolean = message.content.matches("^(?i)/CVE-\\d+-\\d+$".toRegex())
+    override fun canProcess(message: Message): Boolean = message.content.matches("^(?i)/CVE-\\d+-\\d+(/s)?$".toRegex())
 
     override suspend fun handle(message: Message) {
-        val groups = "^(?i)/CVE-(\\d+)-(\\d+)$".toRegex().matchEntire(message.content)?.groupValues ?: return
+        val groups = "^(?i)/CVE-(\\d+)-(\\d+)(/s)?$".toRegex().matchEntire(message.content)?.groupValues ?: return
         val year = groups[1].toInt()
         val number = groups[2].toInt()
+        val short = groups[3].isNotEmpty()
         val text = Util.executeCachedTextRequest("https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-$year-$number", 1000 * 60 * 60 * 2) // 2 hours
         val obj = Json.decodeFromString<JsonObject>(text)
         val result = obj.getObject("result")!!
@@ -38,22 +39,24 @@ class CVEMessageHandler: MessageHandler {
                     "**Base Score**: ${item.impact.baseMetricV2.cvssV2.baseScore} ${item.impact.baseMetricV2.severity}\n**Vector**: ${item.impact.baseMetricV2.cvssV2.vectorString}"
                 }
             }
-            val lines = item.cve.references.referenceData.map { "[${it.name.replace("[", "\\[")}](${it.url})" }
-            val mergedReferences = mutableListOf<String>()
-            var currentString = ""
-            lines.forEach { s ->
-                if (currentString.length + s.length > 1024) {
-                    mergedReferences.add(currentString)
-                    currentString = "$s\n"
-                } else {
-                    currentString += "$s\n"
+            if (!short) {
+                val lines = item.cve.references.referenceData.map { "[${it.name.replace("[", "\\[")}](${it.url})" }
+                val mergedReferences = mutableListOf<String>()
+                var currentString = ""
+                lines.forEach { s ->
+                    if (currentString.length + s.length > 1024) {
+                        mergedReferences.add(currentString)
+                        currentString = "$s\n"
+                    } else {
+                        currentString += "$s\n"
+                    }
                 }
-            }
-            if (currentString.isNotEmpty()) {
-                mergedReferences.add(currentString)
-            }
-            mergedReferences.forEachIndexed { index, s ->
-                builder.field("References (Page ${index+1})") { s }
+                if (currentString.isNotEmpty()) {
+                    mergedReferences.add(currentString)
+                }
+                mergedReferences.forEachIndexed { index, s ->
+                    builder.field("References (Page ${index+1})") { s }
+                }
             }
             embeds.add(builder)
         }
