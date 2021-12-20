@@ -29,6 +29,7 @@ suspend fun main() {
         if (member.isBot) return@on
         val channel = client.getChannel(Snowflake(id)) ?: return@on
         if (channel !is TextChannel) return@on
+        if (channel.guildId != member.guildId) return@on
         channel.createMessage("""
             ${member.mention}
             __新人運営のやることリスト__
