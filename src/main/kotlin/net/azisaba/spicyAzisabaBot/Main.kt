@@ -8,6 +8,9 @@ import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.event.guild.MemberJoinEvent
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.on
+import dev.kord.gateway.Intent
+import dev.kord.gateway.Intents
+import dev.kord.gateway.PrivilegedIntent
 import net.azisaba.spicyAzisabaBot.messages.CVEMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.MessageHandler
 
@@ -15,6 +18,7 @@ private val messageHandlers = listOf<MessageHandler>(
     CVEMessageHandler(),
 )
 
+@OptIn(PrivilegedIntent::class)
 suspend fun main() {
     val client = Kord(System.getenv("BOT_TOKEN"))
 
@@ -48,5 +52,5 @@ suspend fun main() {
         println("Logged in!")
     }
 
-    client.login()
+    client.login { this.intents = Intents(Intent.GuildMembers, Intent.GuildMessages) }
 }
