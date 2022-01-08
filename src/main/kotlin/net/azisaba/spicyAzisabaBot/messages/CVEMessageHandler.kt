@@ -9,6 +9,7 @@ import kotlinx.serialization.json.JsonObject
 import net.azisaba.spicyAzisabaBot.structures.CVEResult
 import net.azisaba.spicyAzisabaBot.util.Util
 import net.azisaba.spicyAzisabaBot.util.getObject
+import java.io.FileNotFoundException
 
 class CVEMessageHandler: MessageHandler {
     override fun canProcess(message: Message): Boolean = message.content.matches("^(?i)/CVE-\\d+-\\d+(/s)?$".toRegex())
@@ -18,7 +19,12 @@ class CVEMessageHandler: MessageHandler {
         val year = groups[1].toInt()
         val number = groups[2].toInt()
         val short = groups[3].isNotEmpty()
-        val text = Util.executeCachedTextRequest("https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-$year-$number", 1000 * 60 * 60 * 2) // 2 hours
+        val text = try {
+            Util.executeCachedTextRequest("https://services.nvd.nist.gov/rest/json/cve/1.0/CVE-$year-$number", 1000 * 60 * 60 * 2) // 2 hours
+        } catch (e: FileNotFoundException) {
+            message.channel.createMessage("Unable to find vuln CVE-$year-$number")
+            return
+        }
         val obj = Json.decodeFromString<JsonObject>(text)
         val result = obj.getObject("result")!!
         val cve = CVEResult.read(result)
