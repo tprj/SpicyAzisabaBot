@@ -30,15 +30,14 @@ class StatsMessageHandler: MessageHandler {
                 "合計 ${botCount + nonBotCount} / ボット $botCount / ユーザー $nonBotCount"
             }
             this.field("Features") { message.getGuild().features.joinToString(", ") { it.value } }
-            this.field("サーバーブースト") { "Level ${message.getGuild().premiumTier.value} (${message.getGuild().premiumSubscriptionCount ?: 1}ブースト)" }
+            this.field("サーバーブースト") { "レベル ${message.getGuild().premiumTier.value} (${message.getGuild().premiumSubscriptionCount ?: 1}ブースト)" }
             this.field("チャンネル数") {
                 val channels = message.getGuild().channels.toList()
-                val threads = channels.count { (10..12).contains(it.type.value) }
                 val categories = channels.count { it.type == ChannelType.GuildCategory }
                 val texts = channels.count { it.type == ChannelType.GuildText || it.type == ChannelType.GuildNews }
                 val voices = channels.count { it.type == ChannelType.GuildVoice || it.type == ChannelType.GuildStageVoice }
                 val ctv = categories + texts + voices
-                "C+T+V $ctv / カテゴリ $categories / テキスト $texts / ボイス $voices / スレッド $threads"
+                "C+T+V $ctv / カテゴリ $categories / テキスト $texts / ボイス $voices"
             }
         }
     }
