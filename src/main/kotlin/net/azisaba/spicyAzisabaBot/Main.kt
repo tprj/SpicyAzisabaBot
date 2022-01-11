@@ -12,11 +12,13 @@ import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
 import dev.kord.gateway.PrivilegedIntent
 import net.azisaba.spicyAzisabaBot.messages.CVEMessageHandler
+import net.azisaba.spicyAzisabaBot.messages.StatsMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.VoteMessageHandler
 
 private val messageHandlers = listOf(
     CVEMessageHandler(),
     VoteMessageHandler(),
+    StatsMessageHandler(),
 )
 
 @OptIn(PrivilegedIntent::class)
