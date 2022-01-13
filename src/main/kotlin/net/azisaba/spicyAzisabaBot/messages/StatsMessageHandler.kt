@@ -8,7 +8,7 @@ import dev.kord.gateway.PrivilegedIntent
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.toList
 
-class StatsMessageHandler: MessageHandler {
+object StatsMessageHandler: MessageHandler {
     override fun canProcess(message: Message): Boolean = message.content == "/stats"
 
     @OptIn(PrivilegedIntent::class)

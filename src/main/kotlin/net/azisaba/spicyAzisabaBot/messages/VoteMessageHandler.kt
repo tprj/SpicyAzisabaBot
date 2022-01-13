@@ -3,7 +3,7 @@ package net.azisaba.spicyAzisabaBot.messages
 import dev.kord.core.behavior.channel.createEmbed
 import dev.kord.core.entity.Message
 
-class VoteMessageHandler: MessageHandler {
+object VoteMessageHandler: MessageHandler {
     override fun canProcess(message: Message): Boolean = message.content == "/vote"
 
     override suspend fun handle(message: Message) {

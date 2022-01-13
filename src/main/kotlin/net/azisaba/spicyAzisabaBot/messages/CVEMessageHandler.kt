@@ -11,10 +11,11 @@ import net.azisaba.spicyAzisabaBot.util.Util
 import net.azisaba.spicyAzisabaBot.util.getObject
 import java.io.FileNotFoundException
 
-class CVEMessageHandler: MessageHandler {
+object CVEMessageHandler: MessageHandler {
     override fun canProcess(message: Message): Boolean = message.content.matches("^(?i)/CVE-\\d+-\\d+(/s)?$".toRegex())
 
     override suspend fun handle(message: Message) {
+        if (message.author?.isBot != false) return
         val groups = "^(?i)/CVE-(\\d+)-(\\d+)(/s)?$".toRegex().matchEntire(message.content)?.groupValues ?: return
         val year = groups[1].toInt()
         val number = groups[2].toInt()
