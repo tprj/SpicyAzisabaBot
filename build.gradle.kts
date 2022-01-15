@@ -31,6 +31,6 @@ tasks {
                 "Main-Class" to "net.azisaba.spicyAzisabaBot.MainKt",
             )
         }
-        archiveFileName.set("SpicyAzisabaBot-${project.version}.jar")
+        archiveFileName.set("SpicyAzisabaBot.jar")
     }
 }
