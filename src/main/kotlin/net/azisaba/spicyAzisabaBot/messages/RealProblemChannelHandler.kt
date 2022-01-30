@@ -9,7 +9,7 @@ object RealProblemChannelHandler : MessageHandler {
 
     override suspend fun handle(message: Message) {
         val content = message.content.lines().getOrNull(0) ?: return
-        (message.channel as TextChannel).startPublicThread(content) {
+        (message.channel.fetchChannel() as TextChannel).startPublicThread(content) {
             this.invitable = true
         }
     }
