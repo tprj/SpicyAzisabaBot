@@ -14,6 +14,7 @@ import dev.kord.gateway.PrivilegedIntent
 import net.azisaba.spicyAzisabaBot.messages.CVEMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.CreateMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.EditMessageHandler
+import net.azisaba.spicyAzisabaBot.messages.RealProblemChannelHandler
 import net.azisaba.spicyAzisabaBot.messages.StatsMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.VoteMessageHandler
 
@@ -23,6 +24,7 @@ private val messageHandlers = listOf(
     StatsMessageHandler,
     CreateMessageHandler,
     EditMessageHandler,
+    RealProblemChannelHandler,
 )
 
 @OptIn(PrivilegedIntent::class)
