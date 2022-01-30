@@ -10,6 +10,7 @@ object RealProblemChannelHandler : MessageHandler {
     override suspend fun handle(message: Message) {
         if (message.author?.isBot != false) return
         val content = message.content.lines().getOrNull(0) ?: return
+        if (content.startsWith("^")) return
         (message.channel.fetchChannel() as TextChannel).startPublicThread(content) {
             this.invitable = true
         }
