@@ -11,8 +11,6 @@ object RealProblemChannelHandler : MessageHandler {
         if (message.author?.isBot != false) return
         val content = message.content.lines().getOrNull(0) ?: return
         if (content.startsWith("^")) return
-        (message.channel.fetchChannel() as TextChannel).startPublicThread(content) {
-            this.invitable = true
-        }
+        (message.channel.fetchChannel() as TextChannel).startPublicThreadWithMessage(message.id, content)
     }
 }
