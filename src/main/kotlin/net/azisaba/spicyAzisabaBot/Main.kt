@@ -13,6 +13,7 @@ import dev.kord.gateway.Intents
 import dev.kord.gateway.PrivilegedIntent
 import net.azisaba.spicyAzisabaBot.messages.AddRolesMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.CVEMessageHandler
+import net.azisaba.spicyAzisabaBot.messages.CountRoleMembersMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.CreateMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.EditMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.RealProblemChannelHandler
@@ -27,6 +28,7 @@ private val messageHandlers = listOf(
     EditMessageHandler,
     RealProblemChannelHandler,
     AddRolesMessageHandler,
+    CountRoleMembersMessageHandler,
 )
 
 @OptIn(PrivilegedIntent::class)
