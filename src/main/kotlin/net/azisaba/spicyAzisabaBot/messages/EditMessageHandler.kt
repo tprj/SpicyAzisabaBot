@@ -12,7 +12,6 @@ object EditMessageHandler: MessageHandler {
     override fun canProcess(message: Message): Boolean = message.author?.isBot != true && message.content.split(" ")[0] == "/edit"
 
     override suspend fun handle(message: Message) {
-        if (message.author?.isBot != false) return
         if (message.getAuthorAsMember()?.getPermissions()?.contains(Permission.ManageMessages) != true) {
             return
         }
