@@ -26,6 +26,7 @@ object AddRolesMessageHandler : MessageHandler {
         message.getGuild().requestMembers().collect { event ->
             event.members
                 .filter { member -> member.roleIds.contains(fromRole) }
+                .filter { member -> !member.roleIds.contains(toRole) }
                 .forEach { member -> member.addRole(toRole) }
         }
     }
