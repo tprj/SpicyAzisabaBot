@@ -53,6 +53,11 @@ suspend fun main() {
             ・規約を確認して同意する https://www.azisaba.net/operating-terms-and-conditions/
             ・ 自己紹介 でPIN留めされたテンプレート通りに自己紹介を行う。
             ・ディスコードのニックネームにMCIDを明記する（形式はほかの運営を参考に）
+            
+            続いて、参加していない場合は以下のグループに参加してください。
+            https://discord.gg/FX8fdBT7A2
+            https://discord.gg/yCmRjxWtbq
+            https://discord.gg/ENn4hJKyvj
         """.trimIndent())
     }
 
