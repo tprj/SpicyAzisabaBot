@@ -19,6 +19,7 @@ import net.azisaba.spicyAzisabaBot.messages.EditMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.RealProblemChannelHandler
 import net.azisaba.spicyAzisabaBot.messages.StatsMessageHandler
 import net.azisaba.spicyAzisabaBot.messages.VoteMessageHandler
+import java.io.File
 
 private val messageHandlers = listOf(
     CVEMessageHandler,
@@ -28,7 +29,7 @@ private val messageHandlers = listOf(
 
 @OptIn(PrivilegedIntent::class)
 suspend fun main() {
-    val client = Kord(System.getenv("BOT_TOKEN"))
+    val client = Kord(File("token.txt").readText())
 
     client.on<MessageCreateEvent> {
         val handler = messageHandlers.findLast { it.canProcess(message) } ?: return@on
