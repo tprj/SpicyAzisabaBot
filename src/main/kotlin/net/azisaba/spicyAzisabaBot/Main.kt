@@ -22,12 +22,7 @@ import net.azisaba.spicyAzisabaBot.messages.VoteMessageHandler
 
 private val messageHandlers = listOf(
     CVEMessageHandler,
-    VoteMessageHandler,
     StatsMessageHandler,
-    CreateMessageHandler,
-    EditMessageHandler,
-    RealProblemChannelHandler,
-    AddRolesMessageHandler,
     CountRoleMembersMessageHandler,
 )
 
@@ -38,27 +33,6 @@ suspend fun main() {
     client.on<MessageCreateEvent> {
         val handler = messageHandlers.findLast { it.canProcess(message) } ?: return@on
         handler.handle(message)
-    }
-
-    client.on<MemberJoinEvent> {
-        val id = System.getenv("WELCOME_CHANNEL_ID")
-        if (id.isNullOrBlank()) return@on
-        if (member.isBot) return@on
-        val channel = client.getChannel(Snowflake(id)) ?: return@on
-        if (channel !is TextChannel) return@on
-        if (channel.guildId != member.guildId) return@on
-        channel.createMessage("""
-            ${member.mention}
-            __新人運営のやることリスト__
-            ・規約を確認して同意する https://www.azisaba.net/operating-terms-and-conditions/
-            ・ 自己紹介 でPIN留めされたテンプレート通りに自己紹介を行う。
-            ・ディスコードのニックネームにMCIDを明記する（形式はほかの運営を参考に）
-            
-            続いて、参加していない場合は以下のグループに参加してください。
-            https://discord.gg/FX8fdBT7A2
-            https://discord.gg/yCmRjxWtbq
-            https://discord.gg/ENn4hJKyvj
-        """.trimIndent())
     }
 
     client.on<ReadyEvent> {
